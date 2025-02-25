@@ -1,0 +1,39 @@
+{
+  "lockfileVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "avary",
+    },
+    "examples/examples-api": {
+      "name": "examples-api",
+      "version": "1.0.0",
+      "dependencies": {
+        "@avary/api": "workspace:*",
+      },
+    },
+    "examples/examples-indexer": {
+      "name": "examples-indexer",
+      "version": "1.0.0",
+      "dependencies": {
+        "@avary/indexer": "workspace:*",
+      },
+    },
+    "packages/@avary/api": {
+      "name": "@avary/api",
+      "version": "1.0.0",
+    },
+    "packages/@avary/indexer": {
+      "name": "@avary/indexer",
+      "version": "1.0.0",
+    },
+  },
+  "packages": {
+    "@avary/api": ["@avary/api@workspace:packages/@avary/api"],
+
+    "@avary/indexer": ["@avary/indexer@workspace:packages/@avary/indexer"],
+
+    "examples-api": ["examples-api@workspace:examples/examples-api"],
+
+    "examples-indexer": ["examples-indexer@workspace:examples/examples-indexer"],
+  }
+}

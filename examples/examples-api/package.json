@@ -1,0 +1,8 @@
+{
+  "name": "examples-api",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "dependencies": {
+    "@avary/api": "workspace:*"
+  }
+} 

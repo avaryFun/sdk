@@ -1,0 +1,8 @@
+{
+  "name": "avary",
+  "private": true,
+  "workspaces": [
+    "packages/@avary/*",
+    "examples/*"
+  ]
+} 
