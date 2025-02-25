@@ -1,9 +1,6 @@
 {
-  "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "outDir": "./dist",
-    "rootDir": "./",
-    "strict": true
-  }
-} 
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../../tsconfig.base.json",
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

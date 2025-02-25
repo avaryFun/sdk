@@ -1,7 +1,21 @@
 {
   "name": "@avary/indexer",
-  "version": "1.0.0",
-  "main": "index.ts",
-  "dependencies": {},
-  "devDependencies": {}
-} 
+  "version": "0.1.2",
+  "files": ["dist/**/*", "README.md", "package.json"],
+  "scripts": {
+      "build": "tsup",
+      "clean": "rm -rf dist",
+      "test": "vitest run --passWithNoTests"
+  },
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "description": "",
+  "dependencies": {
+
+  },
+  "peerDependencies": {
+
+  }
+}

@@ -2,7 +2,11 @@
   "name": "examples-indexer",
   "version": "1.0.0",
   "main": "index.ts",
+  "scripts": {
+    "start": "bun run index.ts"
+  },
   "dependencies": {
-    "@avary/indexer": "workspace:*"
+    "@avary/indexer": "workspace:*",
+    "viem": "^2.23.5"
   }
-} 
+}
