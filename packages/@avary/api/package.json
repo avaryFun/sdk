@@ -1,7 +1,7 @@
 {
   "name": "@avary/api",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "index.ts",
   "dependencies": {},
   "devDependencies": {}
-} 
+}
