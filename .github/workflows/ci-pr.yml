@@ -7,6 +7,10 @@ env:
   TURBO_TOKEN: ${{ secrets.VERCEL_ARTIFACTS_TOKEN }}
   TURBO_TEAM: ${{ secrets.VERCEL_TEAM_ID }}
 
+permissions:
+    contents: read
+    pull-requests: write
+
 jobs:
     build-and-test:
         name: build & test
@@ -14,6 +18,8 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
 
             - name: Setup Node.js, Bun, and install dependencies
               uses: ./.github/actions/bun-setup
@@ -33,6 +39,8 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
 
             - name: Setup Node.js, Bun, and install dependencies
               uses: ./.github/actions/bun-setup
