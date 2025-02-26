@@ -9,6 +9,8 @@
     "build:libs": "bun run turbo --filter \"./packages/**\" build",
     "dev": "bun run turbo dev",
     "dev:libs": "bun run turbo --filter \"./packages/**\" dev",
+    "test": "bun run turbo test",
+    "test:libs": "bun run turbo --filter \"./packages/**\" test",
     "clean:dist": "bun run rimraf \"**/dist\" --glob",
     "clean:node_modules": "bun run rimraf \"**/node_modules\" --glob"
   },
