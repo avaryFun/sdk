@@ -1,8 +1,8 @@
 name: CI-PR
 
 on:
-  pull_request:
-  
+    pull_request:
+
 env:
     TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
     TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
@@ -21,11 +21,17 @@ jobs:
 
             - name: Setup Node.js, Bun, and install dependencies
               uses: ./.github/actions/bun-setup
+              with:
+                  node-version: "20.12.2"
+                  bun-version: "1.1.19"
+                  install-args: "--frozen-lockfile"
 
             - name: Build all
+              working-directory: ./packages
               run: bun run build
 
             - name: Test all
+              working-directory: ./packages
               run: bun run test
 
     lint:
@@ -37,6 +43,11 @@ jobs:
 
             - name: Setup Node.js, Bun, and install dependencies
               uses: ./.github/actions/bun-setup
+              with:
+                  node-version: "20.12.2"
+                  bun-version: "1.1.19"
+                  install-args: "--frozen-lockfile"
 
             - name: Check for lint errors
+              working-directory: ./packages
               run: bun run lint

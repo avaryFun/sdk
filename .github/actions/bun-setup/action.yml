@@ -9,6 +9,13 @@ inputs:
         description: "Bun version to use"
         required: false
         default: "1.1.19"
+    skip-install:
+        description: "Skip 'bun install'"
+        required: false
+        default: false
+    install-args:
+        description: "Additional args supplied to 'bun install'"
+        required: false
     working-directory:
         description: "Working directory to run the command in"
         required: false
@@ -22,6 +29,8 @@ runs:
           run: |
               echo "Node.js version: ${{ inputs.node-version }}"
               echo "Bun version: ${{ inputs.bun-version }}"
+              echo "Skip install: ${{ inputs.skip-install }}"
+              echo "Install args: ${{ inputs.install-args }}"
               echo "Working directory: ${{ inputs.working-directory }}"
 
         - name: Setup Node.js
@@ -34,7 +43,28 @@ runs:
           with:
               bun-version: ${{ inputs.bun-version }}
 
+        - id: bun-cache-dir
+          if: inputs.skip-install == 'false'
+          shell: bash
+          run: |
+              echo "STORE_PATH=$(bun pm cache dir)" >> $GITHUB_OUTPUT
+
+        - id: cache-rotation
+          if: inputs.skip-install == 'false'
+          shell: bash
+          run: |
+              echo "YEAR_MONTH=$(/bin/date -u "+%Y%m")" >> $GITHUB_OUTPUT
+
+        - uses: actions/cache@v3
+          if: inputs.skip-install == 'false'
+          with:
+              path: ${{ steps.bun-cache-dir.outputs.STORE_PATH }}
+              key: ${{ runner.os }}-bun-store-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('**/bun.lockb') }}
+              restore-keys: |
+                  ${{ runner.os }}-bun-store-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-
+
         - name: Install dependencies
+          if: inputs.skip-install == 'false'
           shell: bash
           working-directory: ${{ inputs.working-directory }}
-          run: bun install --frozen-lockfile 
+          run: bun install --frozen-lockfile ${{ inputs.install-args }} 
