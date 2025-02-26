@@ -1,0 +1,41 @@
+name: CI-PR
+
+on:
+  pull_request:
+  
+env:
+  TURBO_TOKEN: ${{ secrets.VERCEL_ARTIFACTS_TOKEN }}
+  TURBO_TEAM: ${{ secrets.VERCEL_TEAM_ID }}
+
+jobs:
+    build-and-test:
+        name: build & test
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js, Bun, and install dependencies
+              uses: ./.github/actions/bun-setup
+
+            - name: Build all
+              run: bun run build
+              env:
+                  TURBO_TOKEN: ${{ secrets.VERCEL_ARTIFACTS_TOKEN }}
+                  TURBO_TEAM: ${{ secrets.VERCEL_TEAM_ID }}
+
+            - name: Test all
+              run: bun run test
+
+    lint:
+        name: lint
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js, Bun, and install dependencies
+              uses: ./.github/actions/bun-setup
+
+            - name: Check for lint errors
+              run: bun run lint
