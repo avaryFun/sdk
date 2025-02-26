@@ -1,8 +1,8 @@
-import { avaryAbi } from "@avary/indexer/src/avary";
-import { contracts } from "@avary/indexer/src/avary";
+import { avaryAbi } from "../avary";
+import { contracts } from "../avary";
 import { createPublicClient } from "viem";
 import { isAddress } from "viem";
-import { getTokenMetadata } from "@avary/indexer/src/services/getTokenMetadata";
+import { getTokenMetadata } from "./getTokenMetadata";
 
 export const getTokensByDeployer = async (client: ReturnType<typeof createPublicClient>, deployerAddress: string) => {
     if (!isAddress(deployerAddress)) {

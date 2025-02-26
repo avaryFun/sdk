@@ -1,6 +1,12 @@
 import { defineConfig } from "tsup";
-import { treeShakableConfig } from "../../../tsup.config.base";
 
 export default defineConfig({
-    ...treeShakableConfig,
+    entry: ["src/**/*.ts"],
+    format: ["esm", "cjs"],
+    dts: true,
+    splitting: true,
+    clean: true,
+    sourcemap: true,
+    treeshake: true,
+    minify: false,
 });
