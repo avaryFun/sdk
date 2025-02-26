@@ -11,6 +11,7 @@ env:
 
 permissions:
     contents: write
+    pull-requests: write
 
 jobs:
     build-and-test:
@@ -52,22 +53,23 @@ jobs:
             - name: Check for changesets
               id: check-changesets
               run: |
-                echo "has_changesets=$(bun run change:status | grep -q "No changesets present" && echo "false" || echo "true")" >> $GITHUB_OUTPUT
+                echo "has_changesets=$(bun run change:status | grep -c "No unreleased changesets found" || true)" >> $GITHUB_OUTPUT
 
             - name: Run changeset version
-              if: steps.check-changesets.outputs.has_changesets == 'true'
+              if: steps.check-changesets.outputs.has_changesets == '0'
               run: bun run change:version
 
             - name: Commit and push changes
-              if: steps.check-changesets.outputs.has_changesets == 'true'
+              if: steps.check-changesets.outputs.has_changesets == '0'
               run: |
                   git add .
                   git commit -m "Release packages"
                   git push origin HEAD:changeset-release/main --force
 
             - name: Publish to npm
-              if: github.ref == 'refs/heads/main' && steps.check-changesets.outputs.has_changesets == 'true'
+              if: github.ref == 'refs/heads/main'
               run: bun run change:publish
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
