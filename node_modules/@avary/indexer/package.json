@@ -1,7 +1,7 @@
 {
   "name": "@avary/indexer",
   "version": "0.0.1",
-  "files": ["dist/**/*", "README.md", "package.json"],
+  "files": ["dist/**/*", "README.md"],
   "scripts": {
     "build": "tsup",
     "clean": "rm -rf dist",
@@ -13,6 +13,9 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "",
   "dependencies": {
     "viem": "^2.23.5"
