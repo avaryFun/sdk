@@ -29,9 +29,9 @@ jobs:
         run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
 
       - name: Install Bun
-        run: |
-          curl -fsSL https://bun.sh/install | bash
-          echo 'export PATH="$HOME/.bun/bin:$PATH"' >> $GITHUB_ENV
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
 
       - name: Source the environment
         run: source $GITHUB_ENV
