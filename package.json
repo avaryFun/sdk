@@ -17,7 +17,7 @@
     "change:publish": "changeset publish",
     "change:status": "changeset status",
     "change:add": "changeset add",
-    "prepare": "husky "
+    "prepare": "husky"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
