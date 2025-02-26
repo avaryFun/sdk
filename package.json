@@ -16,7 +16,8 @@
     "change:version": "changeset version",
     "change:publish": "changeset publish",
     "change:status": "changeset status",
-    "change:add": "changeset add"
+    "change:add": "changeset add",
+    "prepare": "husky "
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -25,6 +26,7 @@
     "@types/node": "22.7.4",
     "cross-env": "7.0.3",
     "globals": "15.12.0",
+    "husky": "^9.1.7",
     "rimraf": "6.0.1",
     "ts-node": "10.9.2",
     "tsc-alias": "1.8.10",
