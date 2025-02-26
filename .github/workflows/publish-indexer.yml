@@ -43,4 +43,6 @@ jobs:
         run: bun run build
 
       - name: Publish package
-        run: bun publish --access public 
+        run: |
+          cd packages/@avary/indexer
+          bun publish --access public 
