@@ -12,6 +12,8 @@ env:
 permissions:
     contents: write
     pull-requests: write
+    issues: write
+    repository-projects: write
 
 jobs:
     build-and-test:
@@ -20,6 +22,8 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
 
             - name: Setup Node.js, Bun, and install dependencies
               uses: ./.github/actions/bun-setup
@@ -35,12 +39,17 @@ jobs:
         runs-on: ubuntu-latest
         needs: [build-and-test]
         steps:
-            - uses: actions/checkout@v4
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+                  token: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Setup Node.js, Bun, and install dependencies
               uses: ./.github/actions/bun-setup
 
             - name: Create Release Pull Request or Publish
+              id: changesets
               uses: changesets/action@v1
               with:
                   commit: "Release packages"
