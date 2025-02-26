@@ -50,6 +50,18 @@ jobs:
                   git config user.name "github-actions[bot]"
                   git config user.email "github-actions[bot]@users.noreply.github.com"
 
+            - name: Setup Node.js with npm auth
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '20.12.2'
+                  registry-url: 'https://registry.npmjs.org'
+
+            - name: Create .npmrc
+              run: |
+                  echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+                  echo "registry=https://registry.npmjs.org/" >> ~/.npmrc
+                  echo "always-auth=true" >> ~/.npmrc
+
             - name: Check for changesets
               id: check-changesets
               run: |
@@ -68,8 +80,12 @@ jobs:
 
             - name: Publish to npm
               if: github.ref == 'refs/heads/main'
-              run: bun run change:publish
+              run: |
+                  echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+                  npm whoami
+                  bun run change:publish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NPM_CONFIG_REGISTRY: "https://registry.npmjs.org"
