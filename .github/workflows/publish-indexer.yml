@@ -48,10 +48,8 @@ jobs:
       - name: Publish package
         run: |
           cd packages/@avary/indexer
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > .npmrc
-          echo "//npm.pkg.github.com/:always-auth=true" >> .npmrc
-          echo "@avary:registry=https://npm.pkg.github.com" >> .npmrc
-          bun publish --access public
+          npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
