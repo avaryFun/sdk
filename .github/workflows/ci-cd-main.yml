@@ -12,6 +12,7 @@ env:
 permissions:
     contents: write
     pull-requests: write
+    id-token: write
 
 jobs:
     build-and-test:
@@ -33,23 +34,38 @@ jobs:
             - name: Test all
               run: bun run test
 
-    release-or-create-release-pr:
+    release:
         name: Release
         runs-on: ubuntu-latest
         needs: [build-and-test]
         steps:
             - uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
 
             - name: Setup Node.js, Bun, and install dependencies
               uses: ./.github/actions/bun-setup
 
+            - name: Setup NPM Authentication
+              run: |
+                echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+                echo "registry=https://registry.npmjs.org/" >> ~/.npmrc
+                echo "always-auth=true" >> ~/.npmrc
+
             - name: Create Release Pull Request or Publish
+              id: changesets
               uses: changesets/action@v1
               with:
-                  commit: "Release packages"
-                  title: "Release packages"
+                  commit: "chore(release): version packages"
+                  title: "chore(release): version packages"
                   publish: bun run change:publish
                   version: bun run change:version
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+            - name: Release Published
+              if: steps.changesets.outputs.published == 'true'
+              run: |
+                echo "🎉 New version published!"
+                echo "Published packages: ${{ steps.changesets.outputs.publishedPackages }}"

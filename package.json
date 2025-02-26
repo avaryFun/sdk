@@ -12,7 +12,11 @@
     "test": "bun run turbo test",
     "test:libs": "bun run turbo --filter \"./packages/**\" test",
     "clean:dist": "bun run rimraf \"**/dist\" --glob",
-    "clean:node_modules": "bun run rimraf \"**/node_modules\" --glob"
+    "clean:node_modules": "bun run rimraf \"**/node_modules\" --glob",
+    "change:version": "changeset version",
+    "change:publish": "changeset publish",
+    "change:status": "changeset status",
+    "change:add": "changeset add"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
