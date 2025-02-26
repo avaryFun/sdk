@@ -49,7 +49,8 @@ jobs:
         run: |
           cd packages/@avary/indexer
           npm config set //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}
-          npm publish --access public
+          npm publish --access public --workspace=@avary/indexer
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_CONFIG_WORKSPACES: false 
